@@ -145,13 +145,13 @@ The API will be available at `http://localhost:8000/api/v1/`.
 
 -   **Implement pagination** for handling larger datasets.
 -   **Improve UI/UX**, including better error handling and loading indicators.
--   **Add more filtering options**, such as searching by location or magnitude.
--   **Implement real-time updates** using web sockets.
+-   **Add more filtering options**, such as searching by magnitude.
+-   **Implement real-time updates**.
 -   **Add user authentication and authorization**.
 
 ## Contributing
 
-We welcome contributions to the Disaster Map project! To contribute:
+Feel free to contribute to the Global Event Tracker project! To contribute:
 
 1.  Fork the repository.
 2.  Create a new branch for your feature or bug fix.
