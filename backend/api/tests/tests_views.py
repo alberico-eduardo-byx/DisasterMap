@@ -30,6 +30,11 @@ class ViewTests(TestCase):
         event = Event.objects.filter(id='EONET_111')
         serializer = EventSerializer(event, many=True)
         self.assertEqual(response.data, serializer.data)
+    
+    def test_get_events_by_invalid_id(self):
+        response = self.client.get(reverse('get_events_by_id', kwargs={'event_id': 'INVALID_ID'}))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
 
     def test_get_events_by_country(self):
         response = self.client.get(reverse('get_events') + '?country=Brazil')
@@ -37,6 +42,11 @@ class ViewTests(TestCase):
         events = Event.objects.filter(country='Brazil')
         serializedEvents = EventSerializer(events, many=True)
         self.assertEqual(response.data, serializedEvents.data)
+    
+    def test_get_events_by_invalid_country(self):
+        response = self.client.get(reverse('get_events') + '?country=None')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
 
     def test_filter_events_by_category(self):
         response = self.client.get(reverse('get_events') + '?category=wildfires')
@@ -44,6 +54,11 @@ class ViewTests(TestCase):
         events = Event.objects.filter(category='wildfires')
         serializedEvents = EventSerializer(events, many=True)
         self.assertEqual(response.data, serializedEvents.data)
+    
+    def test_filter_events_by_invalid_category(self):
+        response = self.client.get(reverse('get_events') + '?category=None')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
 
     def test_filter_events_by_start_date(self):
         response = self.client.get(reverse('get_events') + '?start_date=2024-12-14')
@@ -58,6 +73,11 @@ class ViewTests(TestCase):
         events = Event.objects.filter(date__gte='2024-12-13', date__lte='2024-12-14')
         serializedEvents= EventSerializer(events, many=True)
         self.assertEqual(response.data, serializedEvents.data)
+    
+    def test_filter_events_by_invalid_date_period(self):
+        response = self.client.get(reverse('get_events') + '?start_date=2024-12-14&end_date=2024-12-13')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
 
 
 # python manage.py test api.tests.test_views
